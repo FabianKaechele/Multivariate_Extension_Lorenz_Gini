@@ -16,11 +16,28 @@ This repository contains the Python-Code for the paper: "A multivariate extensio
 
 
 # Installation
-'''  
+```
 $pip install megcmeilc 
-'''
+```
 
 # Usage
 
+```
+import megcmeilc 
 
+
+# data is given
+
+# calculate MEGC
+mult_gini=megcmeilc.megc(data)
+
+# plot MEILC (works only for 2 dimesional data)
+megcmeilc.meilc(data)
+
+# calculate X_star values
+x_star=.egcmeilc.x_stern(data)
+
+# calculate univariate Gini coefficient of onedimesional dataslice
+gini_coef=megcmeilc.gini(datasclice)
+```
 
