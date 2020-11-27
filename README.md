@@ -1,4 +1,4 @@
-# Multivariate_extension_Lorenz_Gini
+# Multivariate_Extension_Lorenz_Gini
 This repository contains the Python-Code for the paper: "A multivariate extension of the Lorenz curve based on copulas and a related multivariate Gini coefficient" (CITATION!!!).
 
 # Features
@@ -19,6 +19,7 @@ This repository contains the Python-Code for the paper: "A multivariate extensio
 ```
 $pip install megcmeilc 
 ```
+Noch zu machen!
 
 # Usage
 
