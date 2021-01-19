@@ -13,10 +13,10 @@ def gini(X):
              Calculates univariate Gini-coeffienct of one dimensional data array
 
              Input:
-                 X:        distribution of single feature over people
+                 X:        numpy array (nx1) distribution of single feature over people
 
              Output:
-                univariate Gini coefficient
+                float univariate Gini coefficient
              """
 
     sorted_X = np.array(X.copy())
@@ -35,10 +35,10 @@ def x_stern(X):
 
 
              Input:
-                 X:        distribution of features over people
+                 X:        numpy array (nxd) distribution of features over people
 
              Output:
-                df:         X* values
+                df:         numpy array (nxd) X^* values
 
 
              """
@@ -70,10 +70,10 @@ def mult_gini(X_stern_values):
              Calculates multivariate Gini coefficient, calculated by formula (7)
 
              Input:
-                 X_stern_values:        Matrix with X^* values
+                 X_stern_values:        numpy-array (nxd) with X^* values
 
              Output:
-                megc:                    multivariate extension of the Gini coefficient
+                megc:                    float multivariate extension of the Gini coefficient, float
 
 
              """
@@ -107,7 +107,7 @@ def emp_dist(C, Y, X_stern):
                  X:        values of X^*
 
              Output:
-                T:
+                 T:        numpy-array grid with empirical distribution of X^*
 
 
              """
