@@ -1,5 +1,5 @@
 # Multivariate_Extension_Lorenz_Gini
-This repository contains the Python-Code for the paper: "A multivariate extension of the Lorenz curve based on copulas and a related multivariate Gini coefficient" (CITATION!!!).
+This repository contains the Python-Code for the paper: "A multivariate extension of the Lorenz curve based on copulas and a related multivariate Gini coefficient" (https://arxiv.org/abs/2101.04748).
 
 ## Features
 * Calculate the MEGC
@@ -15,17 +15,12 @@ This repository contains the Python-Code for the paper: "A multivariate extensio
 * Scipy verison: 1.5.0
 
 
-## Installation
-```
-$pip install megcmeilc 
-```
-Noch zu machen!
 
 ## Usage
-
+save MEILC_MEGC.py in project
 ```
-import megcmeilc 
 
+import MEILC_MEGC as megcmeilc
 
 # data is given
 
