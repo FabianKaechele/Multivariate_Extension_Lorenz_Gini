@@ -6,39 +6,41 @@ import scipy.stats as st
 from matplotlib.colors import LightSource
 
 ####--------------------------------####
-# This is the corresponing Python code to the paper XXXcitationXXX.
+# This is the corresponing Python code to the paper "A multivariate extension of the Lorenz curve based on copulas and a related multivariate Gini coefficient"
+# (https://arxiv.org/abs/2101.04748).
+
 ####--------------------------------####
 def gini(X):
     """
              Calculates univariate Gini-coeffienct of one dimensional data array
 
              Input:
-                 X:        numpy array (nx1) distribution of single feature over people
+                 X:        distribution of single feature over people
 
              Output:
-                float univariate Gini coefficient
+                ginivalue: float - univariate Gini coefficient
              """
 
-    sorted_X = np.array(X.copy())
-    sorted_X.sort()
+    sorted_X = np.array(X.copy()).sort()
     n = X.size
-    help1 = 2.0 / n
-    help2 = (n + 1.0) / n
+
+    scalar1 = 2.0 / n
+    scalar2 = (n + 1.0) / n
     weighted_sum = sum([(i + 1) * j for i, j in enumerate(sorted_X)])
+    ginivalue = scalar1 * weighted_sum / (sorted_X.sum()) - scalar2
+    return ginivalue
 
-    return help1 * weighted_sum / (sorted_X.sum()) - help2
 
-
-def x_stern(X):
+def x_star(X):
     """
              Calculates X* out of values from X for arbitrary dimensions, as defined in formula (6)
 
 
              Input:
-                 X:        numpy array (nxd) distribution of features over people
+                 X:        distribution of features over people
 
              Output:
-                df:         numpy array (nxd) X^* values
+                df:         np-array - X^* values
 
 
              """
@@ -49,55 +51,54 @@ def x_stern(X):
     columns = list(df)
 
     for column in columns:
-        sorted_arr = np.array(df[column].copy())
-        sorted_arr.sort()
-        sorted_arr1 = np.array(df[column])
-        sorted_arr1 = (st.rankdata(sorted_arr1, method='max') - 1).astype(int)
-        sum = np.sum(df[column])
+        sorted_arr = np.array(df[column].copy()).sort()
+        sorted_arr1 = (st.rankdata(np.array(df[column]), method='ordinal') - 1).astype(int)
+        column_sum = np.sum(df[column])
         cum_sum = np.cumsum(sorted_arr)
-        X_stern = cum_sum / sum
-        X_stern_sortiert = np.empty(shape=np.size(df[column]))
-        help = np.size(df[column])
-        for i in range(0, help):
-            X_stern_sortiert[i] = X_stern[sorted_arr1[i]]
-        df[column] = X_stern_sortiert
+        X_star = cum_sum / column_sum
+        X_star_sorted = np.empty(shape=np.size(df[column]))
+
+        for i in range(0, np.size(df[column])):
+            X_star_sorted[i] = X_star[sorted_arr1[i]]
+        df[column] = X_star_sorted
 
     return df
 
 
-def mult_gini(X_stern_values):
+def mult_gini(X_star_values):
     """
              Calculates multivariate Gini coefficient, calculated by formula (7)
 
              Input:
-                 X_stern_values:        numpy-array (nxd) with X^* values
+                 X_stern_values:        Matrix with X^* values
 
              Output:
-                megc:                    float multivariate extension of the Gini coefficient, float
+                megc:                    multivariate extension of the Gini coefficient
 
 
              """
-    d = np.size(X_stern_values, axis=1)
-    n = np.size(X_stern_values, axis=0)
-    X_stern_values = np.array(X_stern_values)
-    inte = 0
-    for i in range(0, n):
-        inner = 0
-        for j in range(0, d):
-            if inner == 0:
-                inner = (1 - X_stern_values[i, j])
-            else:
-                inner = inner * (1 - X_stern_values[i, j])
+    d = np.size(X_star_values, axis=1)
+    n = np.size(X_star_values, axis=0)
 
-        inte = inte + inner
-    inte = inte / n
-    a = math.factorial(d + 1)
-    b = inte * a - 1
-    megc = (inte * math.factorial(d + 1) - 1) / (math.factorial(d + 1) - 1)
+    X_star_values = np.array(X_star_values)
+    outer_value = 0
+
+    for i in range(0, n):
+        inner_value = 0
+        for j in range(0, d):
+            if inner_value == 0:
+                inner_value = (1 - X_star_values[i, j])
+            else:
+                inner_value = inner_value * (1 - X_star_values[i, j])
+
+        outer_value = outer_value + inner_value
+
+    outer_value = outer_value / n
+    megc = (outer_value * math.factorial(d + 1) - 1) / (math.factorial(d + 1) - 1)
     return megc
 
 
-def emp_dist(C, Y, X_stern):
+def emp_dist(C, Y, X_star):
     """
              Calculates the empirical distribution of X^* in given grid to draw the MEILC
 
@@ -107,16 +108,16 @@ def emp_dist(C, Y, X_stern):
                  X:        values of X^*
 
              Output:
-                 T:        numpy-array grid with empirical distribution of X^*
+                T:          np array - empirical distribution fuction of X^*
 
 
              """
 
     grid = np.size(C, axis=0)
-    T = np.zeros(shape=(grid, grid))
-    X_copy = np.copy(X_stern)
+    T = np.empty(shape=(grid, grid))
+    X_copy = np.copy(X_star)
     n = np.size(X_copy, axis=0)
-    X_helper = np.copy(X_stern)
+    X_helper = np.copy(X_star)
     for i in range(0, grid):
         for j in range(0, grid):
             X_helper[:, 0] = np.where(X_copy[:, 0] < C[i], 1, 0)
@@ -134,7 +135,7 @@ def mult_lorenz(datamult):
                     data:        Input data
 
                 Output:
-
+                    -
 
                 """
     # check dimensions
@@ -142,19 +143,19 @@ def mult_lorenz(datamult):
         raise ValueError('Data should be 2 dimsional to plot MEILC')
 
     # calculate X^* values
-    X_stern_values = x_stern(datamult)
+    X_star_values = x_star(datamult)
 
     # calculate MEGC and univariate Ginis
-    megc = mult_gini(X_stern_values)
+    megc = mult_gini(X_star_values)
     gini_x = gini(datamult.iloc[:, 0])
     gini_y = gini(datamult.iloc[:, 1])
 
     # create grid and calculate cdf of X*
-    X_stern = np.array(X_stern_values)
-    C = np.arange(0, 1, 0.01)
-    Y = np.arange(0, 1, 0.01)
+    X_star = np.array(X_star_values)
+    C = np.linspace(0, 1, num=100)
+    Y = np.linspace(0, 1, num=100)
     C, Y = np.meshgrid(C, Y)
-    Z = np.array(emp_dist(C[0, :], Y[:, 0], X_stern))
+    Z = np.array(emp_dist(C[0, :], Y[:, 0], X_star))
 
     # curve starts at 0
     Z[:, 0] = 0
