@@ -31,7 +31,7 @@ mult_gini=megcmeilc.megc(data)
 megcmeilc.meilc(data)
 
 # calculate X_star values
-x_star=.egcmeilc.x_stern(data)
+X_star=megcmeilc.x_star(data)
 
 # calculate univariate Gini coefficient of onedimesional dataslice
 gini_coef=megcmeilc.gini(datasclice)
