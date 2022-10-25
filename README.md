@@ -1,5 +1,10 @@
 # Multivariate_Extension_Lorenz_Gini
-This repository contains the Python-Code for the paper: "A multivariate extension of the Lorenz curve based on copulas and a related multivariate Gini coefficient" (https://arxiv.org/abs/2101.04748).
+This repository contains the Python-Code for the paper: 
+
+***A multivariate extension of the Lorenz curve based on copulas and a related multivariate Gini coefficient.***
+
+ publisched in the Journal of Economic Inequality (2022).
+[Link (klick!) to the paper.](https://doi.org/10.1007/s10888-022-09533-x)
 
 ## Features
 * Calculate the MEGC
@@ -14,26 +19,25 @@ This repository contains the Python-Code for the paper: "A multivariate extensio
 * Matplotlib version: 3.3.1
 * Scipy verison: 1.5.0
 
-
-
 ## Usage
 save MEILC_MEGC.py in project
-```
+
+*data*:  np-array  (nxd) of given data
+
+```python
 
 import MEILC_MEGC as megcmeilc
 
-# data is given
-
 # calculate MEGC
-mult_gini=megcmeilc.megc(data)
+mult_gini = megcmeilc.megc(data)
 
-# plot MEILC (works only for 2 dimesional data)
+# plot MEILC (works only for 2 dimensional data)
 megcmeilc.meilc(data)
 
 # calculate X_star values
-X_star=megcmeilc.x_star(data)
+X_star = megcmeilc.x_star(data)
 
-# calculate univariate Gini coefficient of onedimesional dataslice
-gini_coef=megcmeilc.gini(datasclice)
+# calculate univariate Gini coefficient of onedimensional dataslice
+gini_coef = megcmeilc.gini(datasclice)
 ```
 
