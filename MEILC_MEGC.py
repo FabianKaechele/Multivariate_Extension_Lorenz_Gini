@@ -15,7 +15,7 @@ def gini(X):
              Calculates univariate Gini-coeffienct of one dimensional data array
 
              Input:
-                 X:        distribution of single feature over people
+                 X:        np-array (nxp)-distribution of single feature over people, n observations, p variables
 
              Output:
                 ginivalue: float - univariate Gini coefficient
@@ -37,7 +37,7 @@ def x_star(X):
 
 
              Input:
-                 X:        distribution of features over people
+                 X:        np-array (nxp)- distribution of features over people, n observations, p variables
 
              Output:
                 df:         np-array - X^* values
@@ -70,7 +70,7 @@ def mult_gini(X_star_values):
              Calculates multivariate Gini coefficient, calculated by formula (7)
 
              Input:
-                 X_stern_values:        Matrix with X^* values
+                 X_star_values:        Matrix (nxp) with X^* values, n observations, p variables
 
              Output:
                 megc:                    multivariate extension of the Gini coefficient
