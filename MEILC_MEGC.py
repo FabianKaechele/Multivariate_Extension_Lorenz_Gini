@@ -33,7 +33,7 @@ def gini(X):
 
 def x_star(X):
     """
-             Calculates X* out of values from X for arbitrary dimensions, as defined in formula (6)
+             Calculates X* out of values from X for arbitrary dimensions, as defined in formula (8)
 
 
              Input:
@@ -67,7 +67,7 @@ def x_star(X):
 
 def mult_gini(X_star_values):
     """
-             Calculates multivariate Gini coefficient, calculated by formula (7)
+             Calculates multivariate Gini coefficient, calculated by formula (9)
 
              Input:
                  X_star_values:        Matrix (nxp) with X^* values, n observations, p variables
