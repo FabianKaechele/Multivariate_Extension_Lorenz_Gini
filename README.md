@@ -3,7 +3,7 @@ This repository contains the Python-Code for the paper:
 
 ***A multivariate extension of the Lorenz curve based on copulas and a related multivariate Gini coefficient.***
 
- publisched in the Journal of Economic Inequality (2022).
+ published in the Journal of Economic Inequality (2022).
 [Link (klick!) to the paper.](https://doi.org/10.1007/s10888-022-09533-x)
 
 ## Features
