@@ -51,7 +51,7 @@ def x_star(X):
     columns = list(df)
 
     for column in columns:
-        sorted_arr = np.array(df[column].copy()).sort()
+        sorted_arr = np.sort(np.array(df[column].copy()))
         sorted_arr1 = (st.rankdata(np.array(df[column]), method='ordinal') - 1).astype(int)
         column_sum = np.sum(df[column])
         cum_sum = np.cumsum(sorted_arr)
@@ -85,6 +85,9 @@ def mult_gini(X_star_values):
 
     for i in range(0, n):
         inner_value = 0
+        # Move on if X_star == 1 in one dimension
+        if (len(list(filter (lambda x : x == 1.0, X_star_values[i, :]))) > 0):
+            continue
         for j in range(0, d):
             if inner_value == 0:
                 inner_value = (1 - X_star_values[i, j])
