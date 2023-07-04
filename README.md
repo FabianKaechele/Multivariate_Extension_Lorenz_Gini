@@ -28,14 +28,16 @@ save MEILC_MEGC.py in project
 
 import MEILC_MEGC as megcmeilc
 
+# calculate X_star values
+X_star = megcmeilc.x_star(data)
+
 # calculate MEGC
-mult_gini = megcmeilc.megc(data)
+mult_gini = megcmeilc.megc(X_star)
 
 # plot MEILC (works only for 2 dimensional data)
 megcmeilc.meilc(data)
 
-# calculate X_star values
-X_star = megcmeilc.x_star(data)
+
 
 # calculate univariate Gini coefficient of onedimensional dataslice
 gini_coef = megcmeilc.gini(datasclice)
